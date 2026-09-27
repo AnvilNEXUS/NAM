@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 10 · Putting It Together</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#1c2333;--muted:#5b6478;--line:#dfe4ee;--accent:#1f6fd1;--accent-soft:#e6f0fc;--ok:#17864b;--ok-soft:#e5f6ec;--bad:#c23b3b;--bad-soft:#fbeaea;--warn:#9a6b00;--warn-soft:#fff5d9;--chip:#eef2f8}
+:root[data-theme="dark"]{--bg:#12161f;--card:#1b2130;--ink:#e6eaf2;--muted:#9aa4b8;--line:#2d3547;--accent:#6aa8ff;--accent-soft:#1e2d47;--ok:#4cc987;--ok-soft:#173226;--bad:#ff7b7b;--bad-soft:#3a1f22;--warn:#f3c65b;--warn-soft:#3a3120;--chip:#252d3f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+.bar{max-width:980px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bar h1{font-size:18px;margin:0;flex:1;min-width:180px}
+.bar h1 small{color:var(--muted);font-weight:500}
+#themeBtn{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:14px}
+nav{max-width:980px;margin:0 auto;padding:0 16px 10px;display:flex;gap:6px;overflow-x:auto}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600}
+nav button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+nav button .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-left:6px;visibility:hidden}
+nav button.done .dot{visibility:visible}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+section{display:none}
+section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px}
+h2{margin:0 0 4px;font-size:24px}
+h3{margin:0 0 6px;font-size:19px}
+.sub{color:var(--muted);margin:0 0 16px;font-size:14px}
+.dir{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:0 0 18px;font-size:15px}
+button.primary{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:600;cursor:pointer;font-size:15px}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer;font-size:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.score{font-weight:700}
+input[type=text],select,textarea{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:8px;padding:5px 9px}
+textarea{width:100%;min-height:120px;resize:vertical}
+.ok{border-color:var(--ok)!important;background:var(--ok-soft)!important}
+.bad{border-color:var(--bad)!important;background:var(--bad-soft)!important}
+.fb{font-size:13px;margin-top:4px;min-height:1em}
+.fb.ok{color:var(--ok);background:none!important;border:0!important}
+.fb.bad{color:var(--bad);background:none!important;border:0!important}
+.layout{display:grid;grid-template-columns:1fr 260px;gap:18px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}}
+.bookpage{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.bookpage iframe{display:block;width:100%;height:78vh;min-height:560px;border:0}
+.bookcap{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;font-size:13px;color:var(--muted);background:var(--chip)}
+.bookcap a{color:var(--accent);font-weight:600;text-decoration:none}
+.paste{margin-bottom:14px;border:1px solid var(--line);border-radius:10px;padding:12px}
+.paste textarea{min-height:90px;font-size:14px}
+#myStory p{margin:0 0 12px;text-indent:1.4em}
+#myStory h3{margin:0 0 10px;font-size:20px}
+details.extra{margin-top:14px;border:1px dashed var(--line);border-radius:10px;padding:10px 14px}
+details.extra summary{cursor:pointer;font-weight:700;color:var(--accent)}
+.vw{font-weight:700;color:var(--accent);border-bottom:2px dotted var(--accent);cursor:pointer}
+.side{background:var(--chip);border-radius:12px;padding:14px;font-size:14px;align-self:start}
+.side h4{margin:0 0 8px}
+.side ul{list-style:none;padding:0;margin:0;columns:2}
+.side.long ul{columns:1}
+.side li{cursor:pointer}
+.side li:hover{color:var(--accent)}
+.side li.seen{color:var(--ok);font-weight:700}
+.pop{position:fixed;z-index:20;max-width:320px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:14px;font-size:14px;display:none}
+.pop b.w{font-size:18px}
+.pop .pos{color:var(--muted);font-style:italic}
+.pop .vi{color:var(--warn);margin-top:6px}
+.progress{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:10px}
+.progress i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:700px){.match{grid-template-columns:1fr}}
+.mrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+.mrow .n{width:26px;color:var(--muted);font-weight:700}
+.mrow .word{flex:1;font-weight:600}
+.defs div{padding:7px 0;border-bottom:1px solid var(--line)}
+.defs b{color:var(--accent);margin-right:6px}
+.q{padding:12px 0;border-bottom:1px solid var(--line)}
+.q .stem{font-weight:600;margin-bottom:8px}
+.opts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.opts.two{grid-template-columns:repeat(2,1fr)}
+@media(max-width:620px){.opts,.opts.two{grid-template-columns:1fr 1fr}}
+.opt{border:2px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer;background:var(--card);color:var(--ink);text-align:left;font:inherit;font-size:15px}
+.opt:hover{border-color:var(--accent)}
+.opt.pick{border-color:var(--accent);background:var(--accent-soft)}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+.cloze{line-height:2.4;font-size:16px}
+.cloze p{margin:0 0 10px;text-indent:1.4em}
+.num{font-weight:700;font-size:13px;color:var(--muted);margin-right:2px}
+.tracker{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tracker span{padding:2px 9px;border-radius:999px;font-size:13px;background:var(--chip);color:var(--muted)}
+.tracker span.hit{background:var(--ok-soft);color:var(--ok);font-weight:700}
+.goal{font-size:14px;font-weight:600}
+.preview{margin-top:10px;padding:12px;border:1px dashed var(--line);border-radius:10px;white-space:pre-wrap;min-height:40px}
+.preview u{text-decoration-color:var(--ok);text-decoration-thickness:2px;font-weight:700}
+.cap{padding:10px 0;border-bottom:1px solid var(--line)}
+.cap input{min-width:140px}
+.badge{margin-top:16px;padding:16px;border-radius:12px;text-align:center;display:none}
+.badge .big{font-size:40px}
+.review{margin-top:12px;font-size:14px}
+.review div{padding:4px 0;border-bottom:1px solid var(--line)}
+.pager{display:flex;justify-content:space-between;margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <h1>Lesson 10 · Putting It Together <small>· 7 activities</small></h1>
+    <button id="themeBtn" type="button">🌙 Dark</button>
+  </div>
+  <nav id="nav"></nav>
+</header>
+<main>
+
+<section id="p1"><div class="card">
+  <h2>1 · Read Words in Context</h2>
+  <p class="sub">Bài đọc gốc (trang đầu của lesson) · đọc bài, đoán nghĩa từ theo ngữ cảnh, rồi bấm từ trong danh sách để kiểm tra nghĩa + tiếng Việt</p>
+  <div class="layout">
+    <div>
+      <div class="paste">
+        <b>Your reading text</b>
+        <p class="sub" style="margin:4px 0 8px">Copy bài đọc từ PDF và dán vào đây để đọc dạng HTML. Từ vựng sẽ được tô màu và bấm được. Text được lưu trong trình duyệt của bạn.</p>
+        <input type="text" id="myTitle" placeholder="Title (optional)" style="width:100%;margin-bottom:6px">
+        <textarea id="myText" placeholder="Paste the reading here…"></textarea>
+        <div class="actions" style="margin-top:8px"><button class="primary" id="myRender">Show as reading</button><button class="ghost" id="myEdit" style="display:none">Edit text</button><button class="ghost" id="myClear">Clear</button></div>
+      </div>
+      <div class="story" id="myStory"></div>
+      <details class="extra" id="pdfBox" open><summary>Textbook page (PDF)</summary>
+        <div class="bookpage"><div class="bookcap"><span>Textbook · Lesson 10 · Reading</span><a id="pdfLink" target="_blank">Open PDF ↗</a></div>
+        <iframe id="pdfFrame" title="Lesson reading"></iframe></div>
+      </details>
+    </div>
+    <aside class="side" id="side">
+      <h4>Vocabulary <small style="font-weight:400;color:var(--muted)">· click</small></h4>
+      <ul id="wordList"></ul>
+      <div class="progress"><i id="readBar"></i></div>
+      <p style="margin:8px 0 0" id="readCount"></p>
+      <hr style="border:0;border-top:1px solid var(--line);margin:12px 0">
+      <h4>Word Learning Tip</h4>
+      <p style="margin:0" id="tip"></p>
+    </aside>
+  </div>
+</div></section>
+
+<section id="p2"><div class="card">
+  <h2>2 · Connect Words and Meanings</h2>
+  <p class="sub">Matching · chọn chữ cái của định nghĩa đúng cho mỗi từ</p>
+  <div class="match"><div id="matchRows"></div><div class="defs" id="matchDefs"></div></div>
+  <div class="actions"><button class="primary" id="matchCheck">Check answers</button><button class="ghost" id="matchReset">Reset</button><span class="score" id="matchScore"></span></div>
+</div></section>
+
+<section id="p3"><div class="card">
+  <h2>3 · Connect More Words and Meanings</h2>
+  <p class="sub">Multiple choice · đọc định nghĩa, chọn từ đúng, phản hồi ngay</p>
+  <div id="mcq3"></div>
+  <div class="actions"><span class="score" id="mcq3Score"></span><button class="ghost" id="mcq3Reset">Try again</button></div>
+</div></section>
+
+<section id="p4"><div class="card">
+  <h2>4 · Use Words in Context</h2>
+  <p class="sub">Cloze passage · chọn từ đúng cho mỗi chỗ trống</p>
+  <div class="cloze" id="cloze"></div>
+  <div class="actions"><button class="primary" id="clozeCheck">Check answers</button><button class="ghost" id="clozeReset">Reset</button><span class="score" id="clozeScore"></span></div>
+</div>
+<div class="card">
+  <h3>★ Write with the words</h3>
+  <p class="sub" id="w4dir"></p>
+  <textarea id="card4" placeholder="Start writing…"></textarea>
+  <div class="tracker" id="track4"></div><p class="goal" id="goal4"></p>
+</div></section>
+
+<section id="p5"><div class="card">
+  <h2>5 · Put Words Into Action</h2>
+  <p class="sub">Gõ từ vựng phù hợp vào mỗi câu (chú ý dạng từ)</p>
+  <div id="caps"></div>
+  <div class="actions"><button class="primary" id="capCheck">Check</button><button class="ghost" id="capShow">Show answers</button><span class="score" id="capScore"></span></div>
+</div>
+<div class="card">
+  <h3>★ Write a short story</h3>
+  <p class="sub" id="w5dir"></p>
+  <textarea id="s5story" placeholder="Beginning… middle… end…"></textarea>
+  <div class="tracker" id="track5"></div><p class="goal" id="goal5"></p>
+  <div class="preview" id="prev5"></div>
+</div></section>
+
+<section id="p6"><div class="card">
+  <h2>6 · Review and Extend</h2>
+  <p class="sub" id="revTitle"></p>
+  <p class="dir" id="revDir"></p>
+  <div id="rev"></div>
+  <div class="actions"><button class="primary" id="revCheck">Check</button><button class="ghost" id="revHint">Show hints</button><span class="score" id="revScore"></span></div>
+</div></section>
+
+<section id="p7"><div class="card">
+  <h2>7 · Check Your Mastery</h2>
+  <p class="sub">Final quiz · chấm điểm và xem lại đáp án ở cuối</p>
+  <p class="dir"><b>Part A</b> Choose the word that best fits each blank.</p>
+  <div id="m7a"></div>
+  <p class="dir" style="margin-top:18px"><b>Part B</b> Choose the best answer to each question.</p>
+  <div id="m7b"></div>
+  <div class="actions"><button class="primary" id="m7Submit">Submit quiz</button><button class="ghost" id="m7Reset">Retake</button></div>
+  <div class="badge" id="m7Badge"></div>
+  <div class="review" id="m7Review"></div>
+</div></section>
+
+<div class="pager"><button class="ghost" id="prevBtn">← Previous</button><button class="ghost" id="nextBtn">Next →</button></div>
+</main>
+<div class="pop" id="pop"></div>
+
+<script>
+const D={"n":10,"title":"Putting It Together","tip":"Use everything you know: \u003cb>part of speech\u003c/b>, \u003cb>context clues\u003c/b>, \u003cb>synonyms\u003c/b>, and \u003cb>antonyms\u003c/b> near the word can all help you find its meaning.","words":[["casually","adverb","in a relaxed, informal way","thoải mái, tự nhiên"],["dignity","noun","a calm, serious manner that earns respect","phẩm giá, sự đường hoàng"],["gigantic","adjective","extremely large","khổng lồ"],["impressive","adjective","causing admiration","ấn tượng"],["patience","noun","the ability to wait calmly without getting upset","sự kiên nhẫn"],["perish","verb","to die or be destroyed","chết, bị hủy diệt"],["reassure","verb","to make someone feel less worried","trấn an"],["suitable","adjective","right for a certain purpose","phù hợp"],["thrive","verb","to grow strong and healthy; to do well","phát triển tốt"],["vividly","adverb","in a clear, lively way","sống động, rõ nét"]],"cloze":"Last summer, my family visited a {gigantic|suitable|casual} aquarium. The shark tank was truly {impressive|vivid|patient}. A guide chatted {casually|gigantic|perish} with us, like an old friend.\nShe explained that fish {thrive|reassure|dignity} in clean, cool water, but they can {perish|thrive|suitable} if the water gets too warm. My little brother was scared of the sharks, so Mom had to {reassure|perish|impressive} him.\nWaiting in line for the dolphin show took a lot of {patience|dignity|gigantic}. An old sea turtle swam slowly, with great {dignity|patience|vividly}. Sneakers were {suitable|gigantic|casually} for all the walking. I can still {vividly|casually|suitable} remember the bright orange fish.","caps":[["Flowers ___ when they get plenty of sunshine.",["thrive"]],["Wear clothes that are ___ for cold weather.",["suitable"]],["The doctor tried to ___ the nervous patient.",["reassure"]],["Waiting for the bus in the rain tested my ___.",["patience"]],["An elephant is a ___ animal.",["gigantic"]],["She described her dream so ___ that I could picture it.",["vividly"]]],"review":{"title":"Word forms","dir":"Change each word into the form shown to make a vocabulary word.","items":[["patient (adjective) → noun: ___",["patience"],"-ent → -ence"],["casual (adjective) → adverb: ___",["casually"],"add -ly"],["vivid (adjective) → adverb: ___",["vividly"],"add -ly"],["impress (verb) → adjective: ___",["impressive"],"add -ive"],["suit (verb) → adjective meaning 'fitting': ___",["suitable"],"add -able"]]},"mA":[["Without water, the plants will ___.",["thrive","reassure","perish"],2],["The queen walked with great ___.",["dignity","patience","gigantic"],0],["His magic trick was very ___.",["casually","impressive","perish"],1],["Mom hugged me to ___ me before the test.",["perish","thrive","reassure"],2],["He dressed ___ in jeans and a T-shirt.",["casually","vividly","suitable"],0]],"mB":[["Which is **gigantic**?",["a mouse","a coin","a skyscraper","a pencil"],2],["When do you need **patience**?",["waiting in a long line","eating a snack","sleeping","laughing"],0],["Which is **suitable** for swimming?",["a winter coat","boots","a scarf","a swimsuit"],3],["Where does a fish **thrive**?",["on dry sand","in clean water","in a hot oven","in a freezer"],1],["If you remember a trip **vividly**, you remember it…",["not at all","very clearly","a little","wrongly"],1]],"pdf":"Lesson 10 - Putting It Together.pdf"};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm=s=>String(s).toLowerCase().replace(/[’']/g,"'").replace(/\s+/g," ").trim();
+const W=D.words.map(([w,pos,def,vi,irr])=>({w,pos,def,vi,irr:irr||[]}));
+const N=W.length;
+
+/* ---- word-form matching ---- */
+function formsOf(e){
+  const w=e.w.toLowerCase();const f=new Set([w,...e.irr.map(x=>x.toLowerCase())]);
+  if(/[\s]/.test(w))return f;
+  const last=w.slice(-1),cons=/[bcdfghjklmnpqrstvwxz]/;
+  f.add(w+"s");f.add(w+"es");
+  if(last==="e"){f.add(w+"d");f.add(w.slice(0,-1)+"ing");}
+  else if(last==="y"&&cons.test(w.slice(-2,-1))){f.add(w.slice(0,-1)+"ies");f.add(w.slice(0,-1)+"ied");f.add(w+"ing");}
+  else{f.add(w+"ed");f.add(w+"ing");f.add(w+last+"ed");f.add(w+last+"ing");}
+  return f;}
+W.forEach(e=>e.forms=formsOf(e));
+const reEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+const ALLRE=new RegExp("\\b("+W.flatMap(e=>[...e.forms]).sort((a,b)=>b.length-a.length).map(x=>reEsc(x).replace(/ /g,"\\s+")).join("|")+")\\b","gi");
+const entryOf=t=>{const n=norm(t);return W.find(e=>e.w.toLowerCase()===n)||W.find(e=>e.forms.has(n))||null;};
+function usedEntries(text){const s=new Set();(text.match(ALLRE)||[]).forEach(m=>{const e=entryOf(m);if(e)s.add(e.w);});return s;}
+function highlight(text){return esc(text).replace(ALLRE,m=>{const e=entryOf(m);return e?`<span class="vw" data-w="${esc(e.w)}">${m}</span>`:m;});}
+function markDone(n){document.querySelector(`nav button[data-p="${n}"]`).classList.add("done");}
+/* deterministic shuffle */
+function shuffle(arr,seed){const a=arr.slice();let s=seed*9301+49297;for(let i=a.length-1;i>0;i--){s=(s*9301+49297)%233280;const j=Math.floor(s/233280*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* ---- nav + theme ---- */
+const PAGES=["Read","Match","Meanings","Context","Action","Review","Mastery"];let cur=1;
+PAGES.forEach((t,i)=>{const b=document.createElement("button");b.dataset.p=i+1;b.innerHTML=`${i+1} · ${t}<span class="dot"></span>`;b.onclick=()=>go(i+1);$("nav").appendChild(b);});
+function go(n){cur=n;document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id==="p"+n));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",+b.dataset.p===n));
+  $("prevBtn").style.visibility=n===1?"hidden":"visible";$("nextBtn").style.visibility=n===7?"hidden":"visible";hidePop();window.scrollTo({top:0});}
+$("prevBtn").onclick=()=>go(cur-1);$("nextBtn").onclick=()=>go(cur+1);
+function setTheme(t){document.documentElement.dataset.theme=t;$("themeBtn").textContent=t==="dark"?"☀️ Light":"🌙 Dark";}
+$("themeBtn").onclick=()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
+window.addEventListener("message",e=>{if(e.data&&e.data.type==="theme")setTheme(e.data.theme);});
+
+/* ---- P1 ---- */
+const pdf=encodeURI(D.pdf);$("pdfFrame").src=pdf+"#page=1&view=FitH&toolbar=0&navpanes=0";$("pdfLink").href=pdf+"#page=1";
+$("tip").innerHTML=D.tip;
+if(W.some(e=>e.w.length>14))$("side").classList.add("long");
+const pop=$("pop"),seen=new Set();
+W.forEach(e=>{const li=document.createElement("li");li.textContent=e.w;li.dataset.w=e.w;li.onclick=ev=>{ev.stopPropagation();showPop(li,e.w);};$("wordList").appendChild(li);});
+function upd1(){$("readBar").style.width=seen.size/N*100+"%";$("readCount").textContent=`${seen.size} / ${N} opened`+(seen.size===N?" ✓":"");if(seen.size===N)markDone(1);}
+function showPop(el,w){const e=W.find(x=>x.w===w);
+  pop.innerHTML=`<b class="w">${esc(e.w)}</b> <span class="pos">(${esc(e.pos)})</span><div>${esc(e.def)}</div><div class="vi">🇻🇳 ${esc(e.vi)}</div>`;
+  pop.style.display="block";const r=el.getBoundingClientRect(),pw=Math.min(320,innerWidth-24);
+  let left=Math.min(Math.max(12,r.left),innerWidth-pw-12),top=r.bottom+8;if(top+170>innerHeight)top=Math.max(12,r.top-pop.offsetHeight-8);
+  pop.style.left=left+"px";pop.style.top=top+"px";seen.add(w);document.querySelectorAll("#wordList li").forEach(li=>{if(li.dataset.w===w)li.classList.add("seen");});upd1();}
+function hidePop(){pop.style.display="none";}
+document.addEventListener("click",e=>{if(!pop.contains(e.target))hidePop();});
+addEventListener("scroll",hidePop,{passive:true});upd1();
+const LS="reading_L"+D.n;
+function renderMine(){const t=$("myTitle").value,x=$("myText").value,box=$("myStory");
+  if(!x.trim()){box.innerHTML="";}else{const paras=x.replace(/\r/g,"").split(/\n\s*\n|\n(?=\s)/).map(p=>p.replace(/\s*\n\s*/g," ").trim()).filter(Boolean);
+  box.innerHTML=(t?`<h3>${esc(t)}</h3>`:"")+paras.map(p=>`<p>${highlight(p)}</p>`).join("");
+  box.querySelectorAll(".vw").forEach(v=>v.addEventListener("click",e=>{e.stopPropagation();showPop(v,v.dataset.w);}));}
+  const has=!!x.trim();["myText","myTitle","myRender"].forEach(i=>$(i).style.display=has?"none":"");$("myEdit").style.display=has?"":"none";$("pdfBox").open=!has;
+  try{localStorage.setItem(LS,JSON.stringify({t,x}));}catch(e){}}
+$("myRender").onclick=renderMine;
+$("myEdit").onclick=()=>{["myText","myTitle","myRender"].forEach(i=>$(i).style.display="");$("myEdit").style.display="none";};
+$("myClear").onclick=()=>{$("myText").value="";$("myTitle").value="";renderMine();};
+try{const s=JSON.parse(localStorage.getItem(LS)||"null");if(s&&s.x){$("myTitle").value=s.t||"";$("myText").value=s.x;renderMine();}}catch(e){}
+
+/* ---- P2 matching ---- */
+const MW=W.slice(0,Math.min(10,N));const L="ABCDEFGHIJ".slice(0,MW.length);
+const order=shuffle(MW.map((_,i)=>i),D.n+1);const letterOf={};order.forEach((mi,k)=>letterOf[MW[mi].w]=L[k]);
+$("matchDefs").innerHTML=order.map((mi,k)=>`<div><b>${L[k]}.</b>${esc(MW[mi].def)}</div>`).join("");
+$("matchRows").innerHTML=MW.map((e,i)=>`<div class="mrow"><span class="n">${i+1}.</span><span class="word">${esc(e.w)}</span><select data-w="${esc(e.w)}"><option value="">–</option>${[...L].map(l=>`<option>${l}</option>`).join("")}</select></div>`).join("");
+$("matchCheck").onclick=()=>{let s=0;document.querySelectorAll("#matchRows select").forEach(x=>{const ok=x.value===letterOf[x.dataset.w];x.className=x.value?(ok?"ok":"bad"):"bad";if(ok)s++;});$("matchScore").textContent=`${s} / ${MW.length}`+(s===MW.length?" 🎉":"");if(s===MW.length)markDone(2);};
+$("matchReset").onclick=()=>{document.querySelectorAll("#matchRows select").forEach(x=>{x.value="";x.className="";});$("matchScore").textContent="";};
+
+/* ---- MCQ helper ---- */
+function buildMCQ(box,items,start,onPick){$(box).innerHTML="";items.forEach((it,qi)=>{const q=document.createElement("div");q.className="q";
+  q.innerHTML=`<div class="stem">${start+qi}. ${it.q}</div><div class="opts ${it.o.some(o=>String(o).length>16)?"two":""}"></div>`;
+  it.o.forEach((t,oi)=>{const b=document.createElement("button");b.type="button";b.className="opt";b.innerHTML=`<b>${"ABCD"[oi]}.</b> ${esc(t)}`;b.onclick=()=>onPick(q,b,qi,oi);q.querySelector(".opts").appendChild(b);});$(box).appendChild(q);});}
+
+/* ---- P3 ---- */
+const QW=N>10?W.slice(-8):W.slice(0,Math.min(8,N));
+const MCQ3=QW.map((e,i)=>{const grp=(D.groups||[]).find(g=>g.includes(e.w))||[e.w];const others=shuffle(W.filter(x=>!grp.includes(x.w)),D.n*7+i).slice(0,3).map(x=>x.w);const o=shuffle([e.w,...others],D.n*3+i);return{q:esc(e.def),o,a:o.indexOf(e.w)};});
+let s3,d3;function init3(){s3=0;d3=new Set();$("mcq3Score").textContent=`0 / ${MCQ3.length}`;
+  buildMCQ("mcq3",MCQ3,1,(q,b,qi,oi)=>{if(d3.has(qi))return;d3.add(qi);q.querySelectorAll(".opt")[MCQ3[qi].a].classList.add("ok");if(oi!==MCQ3[qi].a)b.classList.add("bad");else s3++;
+  $("mcq3Score").textContent=`${s3} / ${MCQ3.length}`+(d3.size===MCQ3.length?(s3===MCQ3.length?" 🎉":" – try again"):"");if(s3===MCQ3.length)markDone(3);});}
+init3();$("mcq3Reset").onclick=init3;
+
+/* ---- P4 cloze ---- */
+const clozeAns=[];let ci=0;
+$("cloze").innerHTML=D.cloze.split(/\n+/).map(p=>`<p>${p.replace(/\{([^}]+)\}/g,(m,g)=>{const ops=g.split("|");clozeAns.push(ops[0]);const o=shuffle(ops,D.n*11+ci);
+  const h=`<span class="num">(${ci+1})</span><select data-i="${ci}"><option value="">choose…</option>${o.map(x=>`<option>${esc(x)}</option>`).join("")}</select>`;ci++;return h;})}</p>`).join("");
+$("clozeCheck").onclick=()=>{let s=0;document.querySelectorAll("#cloze select").forEach(x=>{const ok=x.value===clozeAns[+x.dataset.i];x.className=ok?"ok":"bad";if(ok)s++;});$("clozeScore").textContent=`${s} / ${clozeAns.length}`+(s===clozeAns.length?" 🎉":"");if(s===clozeAns.length)markDone(4);};
+$("clozeReset").onclick=()=>{document.querySelectorAll("#cloze select").forEach(x=>{x.value="";x.className="";});$("clozeScore").textContent="";};
+function tracker(el,tr,g,need,pv){const u=()=>{const t=el.value,used=usedEntries(t);$(tr).innerHTML=W.map(e=>`<span class="${used.has(e.w)?"hit":""}">${esc(e.w)}</span>`).join("");
+  $(g).textContent=used.size>=need?`✓ ${used.size} vocabulary words used — goal reached!`:`${used.size} / ${need} vocabulary words used`;$(g).style.color=used.size>=need?"var(--ok)":"var(--muted)";
+  if(pv)$(pv).innerHTML=esc(t).replace(ALLRE,m=>`<u>${m}</u>`)||"<span style='color:var(--muted)'>Preview with vocabulary words underlined appears here.</span>";};el.addEventListener("input",u);u();}
+const need4=Math.min(3,N),need5=Math.min(5,N);
+$("w4dir").textContent=D.write4||`Viết một đoạn ngắn (thư, nhật ký hoặc mô tả) dùng ít nhất ${need4} từ vựng. Mọi dạng từ đều được tính.`;
+$("w5dir").textContent=D.write5||`Viết một câu chuyện ngắn có mở – thân – kết, dùng ít nhất ${need5} từ vựng. Bản preview sẽ tự gạch chân.`;
+tracker($("card4"),"track4","goal4",need4);tracker($("s5story"),"track5","goal5",need5,"prev5");
+
+/* ---- P5 captions ---- */
+$("caps").innerHTML=D.caps.map(([t],i)=>`<div class="cap"><b>${i+1}.</b> ${esc(t).replace("___",`<input type="text" data-i="${i}" autocomplete="off" autocapitalize="off" spellcheck="false">`)}<div class="fb" id="cfb${i}"></div></div>`).join("");
+$("capCheck").onclick=()=>{let s=0;document.querySelectorAll("#caps input").forEach(x=>{const i=+x.dataset.i,v=norm(x.value),acc=D.caps[i][1].map(norm),fb=$("cfb"+i);
+  if(acc.includes(v)){s++;x.className="ok";fb.className="fb ok";fb.textContent="✓ Correct";}
+  else{x.className="bad";fb.className="fb bad";const e=entryOf(v),ae=entryOf(acc[0]);fb.textContent=!v?"Fill in the blank.":(e&&ae&&e.w===ae.w?"Right word — check its form.":e?"That word doesn't fit here.":"Not a vocabulary word — check the list.");}});
+  $("capScore").textContent=`${s} / ${D.caps.length}`+(s===D.caps.length?" 🎉":"");if(s===D.caps.length)markDone(5);};
+$("capShow").onclick=()=>D.caps.forEach((c,i)=>{const fb=$("cfb"+i);if(!fb.textContent.startsWith("✓")){fb.className="fb";fb.style.color="var(--warn)";fb.textContent="Answer: "+c[1][0];}});
+
+/* ---- P6 review ---- */
+$("revTitle").textContent=D.review.title;$("revDir").innerHTML="<b>Directions</b> "+D.review.dir;
+$("rev").innerHTML=D.review.items.map(([q],i)=>`<div class="q"><div>${i+1}. ${esc(q).replace("___",`<input type="text" data-i="${i}" autocomplete="off" autocapitalize="off" spellcheck="false">`)}</div><div class="fb" id="rfb${i}"></div></div>`).join("");
+$("revCheck").onclick=()=>{let s=0;document.querySelectorAll("#rev input").forEach(x=>{const i=+x.dataset.i,v=norm(x.value),acc=D.review.items[i][1].map(norm),fb=$("rfb"+i);
+  if(acc.includes(v)){s++;x.className="ok";fb.className="fb ok";fb.textContent="✓ Correct";}else{x.className="bad";fb.className="fb bad";fb.textContent=v?"Not quite — try again or show hints.":"Fill in the blank.";}});
+  $("revScore").textContent=`${s} / ${D.review.items.length}`+(s===D.review.items.length?" 🎉":"");if(s===D.review.items.length)markDone(6);};
+$("revHint").onclick=()=>D.review.items.forEach((it,i)=>{const fb=$("rfb"+i);if(!fb.textContent.startsWith("✓")){fb.className="fb";fb.style.color="var(--warn)";fb.textContent="Hint: "+it[2];}});
+
+/* ---- P7 mastery ---- */
+const A7=D.mA.map(([q,o,a])=>({q:esc(q).replace("___","______"),o,a})),B7=D.mB.map(([q,o,a])=>({q:esc(q).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>"),o,a}));
+const ALL7=[...A7,...B7];let picks7={},locked7=false;
+function init7(){picks7={};locked7=false;$("m7Badge").style.display="none";$("m7Review").innerHTML="";
+  const pick=(q,b,i,oi)=>{if(locked7)return;q.querySelectorAll(".opt").forEach(x=>x.classList.remove("pick"));b.classList.add("pick");picks7[i]=oi;};
+  buildMCQ("m7a",A7,1,(q,b,qi,oi)=>pick(q,b,qi,oi));buildMCQ("m7b",B7,A7.length+1,(q,b,qi,oi)=>pick(q,b,qi+A7.length,oi));}
+init7();$("m7Reset").onclick=init7;
+$("m7Submit").onclick=()=>{const T=ALL7.length;if(Object.keys(picks7).length<T){$("m7Review").innerHTML=`<div style="color:var(--warn)">You answered ${Object.keys(picks7).length} / ${T}. Answer every question, then submit again.</div>`;return;}
+  locked7=true;let s=0;const qs=[...document.querySelectorAll("#m7a .q"),...document.querySelectorAll("#m7b .q")],rev=[];
+  qs.forEach((q,i)=>{const b=q.querySelectorAll(".opt"),a=ALL7[i].a;b[a].classList.add("ok");if(picks7[i]===a)s++;else{b[picks7[i]].classList.add("bad");rev.push(`<div>❌ <b>${i+1}.</b> Correct answer: <b>${esc(ALL7[i].o[a])}</b> (you chose: ${esc(ALL7[i].o[picks7[i]])})</div>`);}});
+  const pct=Math.round(s/T*100),bd=$("m7Badge");bd.style.display="block";
+  const lv=pct>=90?["🏆","Mastered!","var(--ok-soft)"]:pct>=70?["⭐","Almost there — review the words you missed.","var(--warn-soft)"]:["📘","Keep practicing — go back to pages 1–3.","var(--bad-soft)"];
+  bd.style.background=lv[2];bd.innerHTML=`<div class="big">${lv[0]}</div><div style="font-size:22px;font-weight:800">${s} / ${T} · ${pct}%</div><div>${lv[1]}</div>`;
+  $("m7Review").innerHTML=rev.length?"<b>Review</b>"+rev.join(""):"<b>Perfect score — no mistakes!</b>";if(pct>=90)markDone(7);bd.scrollIntoView({behavior:"smooth",block:"center"});};
+go(1);
+</script>
+</body>
+</html>

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 2 · Verbs to Know</title>
+<style>
+:root{
+  --bg:#f4f6fb; --card:#ffffff; --ink:#1c2333; --muted:#5b6478; --line:#dfe4ee;
+  --accent:#1f6fd1; --accent-soft:#e6f0fc; --ok:#17864b; --ok-soft:#e5f6ec; --bad:#c23b3b; --bad-soft:#fbeaea;
+  --warn:#9a6b00; --warn-soft:#fff5d9; --chip:#eef2f8;
+}
+:root[data-theme="dark"]{
+  --bg:#12161f; --card:#1b2130; --ink:#e6eaf2; --muted:#9aa4b8; --line:#2d3547;
+  --accent:#6aa8ff; --accent-soft:#1e2d47; --ok:#4cc987; --ok-soft:#173226; --bad:#ff7b7b; --bad-soft:#3a1f22;
+  --warn:#f3c65b; --warn-soft:#3a3120; --chip:#252d3f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+.bar{max-width:920px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bar h1{font-size:18px;margin:0;flex:1;min-width:180px}
+.bar h1 small{color:var(--muted);font-weight:500}
+#themeBtn{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:14px}
+nav{max-width:920px;margin:0 auto;padding:0 16px 10px;display:flex;gap:6px;overflow-x:auto}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600}
+nav button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+nav button .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-left:6px;visibility:hidden}
+nav button.done .dot{visibility:visible}
+main{max-width:920px;margin:0 auto;padding:20px 16px 60px}
+section{display:none}
+section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px}
+h2{margin:0 0 4px;font-size:24px}
+.sub{color:var(--muted);margin:0 0 16px;font-size:14px}
+.dir{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:0 0 18px;font-size:15px}
+.bank{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.bank span{background:var(--chip);border-radius:6px;padding:3px 9px;font-size:14px;font-weight:600}
+.bank span.used{text-decoration:line-through;opacity:.5}
+button.primary{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:600;cursor:pointer;font-size:15px}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer;font-size:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.score{font-weight:700}
+input[type=text],select,textarea{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:8px;padding:5px 9px}
+textarea{width:100%;min-height:120px;resize:vertical}
+.ok{border-color:var(--ok)!important;background:var(--ok-soft)!important}
+.bad{border-color:var(--bad)!important;background:var(--bad-soft)!important}
+.fb{font-size:13px;margin-top:4px;min-height:1em}
+.fb.ok{color:var(--ok);background:none!important;border:0!important}
+.fb.bad{color:var(--bad);background:none!important;border:0!important}
+
+/* Page 1 reader */
+.layout{display:grid;grid-template-columns:1fr 250px;gap:18px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}}
+.bookpage{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.bookpage iframe{display:block;width:100%;height:78vh;min-height:560px;border:0}
+.bookcap{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;font-size:13px;color:var(--muted);background:var(--chip)}
+.bookcap a{color:var(--accent);font-weight:600;text-decoration:none}
+#myStory p{margin:0 0 12px;text-indent:1.4em}
+#myStory h3{margin:0 0 10px;font-size:20px}
+.paste{margin-bottom:14px;border:1px solid var(--line);border-radius:10px;padding:12px}
+.paste textarea{min-height:90px;font-size:14px}
+details.extra{margin-top:14px;border:1px dashed var(--line);border-radius:10px;padding:10px 14px}
+details.extra summary{cursor:pointer;font-weight:700;color:var(--accent)}
+.side li{cursor:pointer}
+.side li:hover{color:var(--accent)}
+.story p{margin:0 0 12px;text-indent:1.4em}
+.story h3{margin:0 0 10px;font-size:20px}
+.vw{font-weight:700;color:var(--accent);border-bottom:2px dotted var(--accent);cursor:pointer}
+.vw.seen{color:var(--ok);border-color:var(--ok)}
+.side{background:var(--chip);border-radius:12px;padding:14px;font-size:14px;align-self:start}
+.side h4{margin:0 0 8px}
+.side ul{list-style:none;padding:0;margin:0;columns:2}
+.side li.seen{color:var(--ok);font-weight:700}
+.pop{position:fixed;z-index:20;max-width:320px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:14px;font-size:14px;display:none}
+.pop b.w{font-size:18px}
+.pop .pos{color:var(--muted);font-style:italic}
+.pop .vi{color:var(--warn);margin-top:6px}
+.pop .clue{background:var(--accent-soft);border-radius:8px;padding:6px 8px;margin-top:8px}
+.progress{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:10px}
+.progress i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+
+/* Page 2 matching */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:700px){.match{grid-template-columns:1fr}}
+.mrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+.mrow .n{width:26px;color:var(--muted);font-weight:700}
+.mrow .word{flex:1;font-weight:600}
+.defs div{padding:7px 0;border-bottom:1px solid var(--line)}
+.defs b{color:var(--accent);margin-right:6px}
+
+/* MCQ */
+.q{padding:12px 0;border-bottom:1px solid var(--line)}
+.q .stem{font-weight:600;margin-bottom:8px}
+.opts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.opts.two{grid-template-columns:repeat(2,1fr)}
+@media(max-width:620px){.opts,.opts.two{grid-template-columns:1fr 1fr}}
+.opt{border:2px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer;background:var(--card);color:var(--ink);text-align:left;font:inherit;font-size:15px}
+.opt:hover{border-color:var(--accent)}
+.opt.pick{border-color:var(--accent);background:var(--accent-soft)}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+
+/* Billboard */
+.billboard{margin-top:14px;border:3px solid var(--ink);border-radius:10px;padding:26px 16px;text-align:center;min-height:130px;background:repeating-linear-gradient(45deg,var(--card),var(--card) 12px,var(--chip) 12px,var(--chip) 24px)}
+.bb-word{font-size:40px;font-weight:900;letter-spacing:4px;display:inline-block}
+.bb-word span{display:inline-block;transition:all .4s}
+.bb-slogan{margin-top:10px;font-size:18px;font-weight:600}
+.fx-boost span{transform:translateY(calc(var(--i) * -6px))}
+.fx-topple span{transform:rotate(calc(var(--i) * 9deg)) translateY(calc(var(--i) * 3px))}
+.fx-weaken span{opacity:calc(1 - var(--i) * .11);font-weight:calc(900 - var(--i) * 90)}
+.fx-assemble span{margin:0 -2px}
+.fx-reveal span{filter:blur(calc((var(--n) - var(--i)) * .6px))}
+.fx-transport span{transform:skewX(-15deg)}
+.fx-irritate span{animation:shake .25s infinite alternate;animation-delay:calc(var(--i) * .03s)}
+.fx-reject span{text-decoration:line-through;color:var(--bad)}
+.fx-concentrate{letter-spacing:-2px}
+@keyframes shake{from{transform:translateX(-2px)}to{transform:translateX(2px)}}
+
+/* Cloze */
+.cloze{line-height:2.4;font-size:16px}
+.cloze p{margin:0 0 10px;text-indent:1.4em}
+.cloze select{padding:3px 6px}
+.num{font-weight:700;font-size:13px;color:var(--muted);margin-right:2px}
+
+/* Tracker */
+.tracker{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tracker span{padding:2px 9px;border-radius:999px;font-size:13px;background:var(--chip);color:var(--muted)}
+.tracker span.hit{background:var(--ok-soft);color:var(--ok);font-weight:700}
+.goal{font-size:14px;font-weight:600}
+.preview{margin-top:10px;padding:12px;border:1px dashed var(--line);border-radius:10px;white-space:pre-wrap;min-height:40px}
+.preview u{text-decoration-color:var(--ok);text-decoration-thickness:2px;font-weight:700}
+
+/* Captions */
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:680px){.panels{grid-template-columns:1fr}}
+.panel{border:2px solid var(--line);border-radius:12px;padding:12px}
+.panel .scene{font-size:44px;text-align:center;background:var(--chip);border-radius:8px;padding:8px 0;margin-bottom:8px}
+.panel textarea{min-height:56px;font-size:14px;margin-top:6px}
+
+/* Tense table */
+table.tense{width:100%;border-collapse:collapse;margin:6px 0 16px;font-size:14px}
+table.tense th,table.tense td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+table.tense th{background:var(--chip)}
+.sticker{display:inline-block;margin:8px 8px 0 0;padding:8px 16px;border-radius:8px;font-weight:800;background:var(--warn-soft);color:var(--warn);border:2px solid var(--warn)}
+
+/* Mastery */
+.badge{margin-top:16px;padding:16px;border-radius:12px;text-align:center;display:none}
+.badge .big{font-size:40px}
+.review{margin-top:12px;font-size:14px}
+.review div{padding:4px 0;border-bottom:1px solid var(--line)}
+.pager{display:flex;justify-content:space-between;margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <h1>Lesson 2 · Verbs to Know <small>· 7 activities</small></h1>
+    <button id="themeBtn" type="button">🌙 Dark</button>
+  </div>
+  <nav id="nav"></nav>
+</header>
+<main>
+
+<!-- ========== PAGE 1 ========== -->
+<section id="p1">
+  <div class="card">
+    <h2>1 · Read Words in Context</h2>
+    <p class="sub">Bài đọc gốc Lesson 2 (trang 13) · đọc bên trái, bấm từng từ trong danh sách bên phải để xem nghĩa + tiếng Việt</p>
+    <p class="dir"><b>Directions</b> Read “The Farmer and the Wise Woman”. For each bold word, guess its meaning from the words around it first. Then click the word in the Vocabulary list to check. Open all 15 to finish.</p>
+    <div class="layout">
+      <div>
+      <div class="paste" id="pasteBox">
+        <b>Your reading text</b>
+        <p class="sub" style="margin:4px 0 8px">Mở PDF, copy đoạn “The Farmer and the Wise Woman” rồi dán vào đây. Trang sẽ tự hiển thị thành HTML, 15 từ vựng được tô màu và bấm được. Text được lưu trong trình duyệt của bạn.</p>
+        <input type="text" id="myTitle" placeholder="Title (optional)" style="width:100%;margin-bottom:6px">
+        <textarea id="myText" placeholder="Paste the reading here…"></textarea>
+        <div class="actions" style="margin-top:8px"><button class="primary" id="myRender">Show as reading</button><button class="ghost" id="myEdit" style="display:none">Edit text</button><button class="ghost" id="myClear">Clear</button></div>
+      </div>
+      <div class="story" id="myStory"></div>
+      <details class="extra" id="pdfBox" open><summary>Textbook page (PDF)</summary>
+      <div class="bookpage"><div class="bookcap"><span>Textbook · Lesson 2 · Read Words in Context</span><a href="Lesson%2002%20-%20Verbs%20to%20Know.pdf#page=1" target="_blank">Open PDF ↗</a></div>
+        <iframe src="Lesson%2002%20-%20Verbs%20to%20Know.pdf#page=1&view=FitH&toolbar=0&navpanes=0" title="Lesson 2 reading"></iframe></div></details>
+      <details class="extra"><summary>Extra reading · Mai's Robot (cùng 15 từ, luyện thêm)</summary>
+      <div class="story" id="story">
+        <h3>Mai's Robot</h3>
+        <p>Mai had three days to finish her robot for the science fair, but she could not <w>concentrate</w>. Her little brother Tuan kept knocking on her door, and the noise <w>irritated</w> her. She decided to <w>consult</w> her grandfather, a retired engineer. Everyone in the family <w>referred</w> to him whenever something broke.</p>
+        <p>"Grandpa, I can't <w>manage</w> to finish anything," Mai said. "Tuan won't leave me alone, so I <w>reject</w> every idea he gives me."</p>
+        <p>Grandpa smiled. "Why not let him help? Kids love to feel useful." Mai doubted it, but she <w>coaxed</w> Tuan into her room with a promise of cookies.</p>
+        <p>Together they <w>assembled</w> the robot's arms and legs. Tuan held the screws while Mai tightened them. His help <w>boosted</w> her speed, and soon the robot could walk a few steps. They <w>devoted</w> the whole afternoon to testing it.</p>
+        <p>On the first test, the robot bumped a table leg, and a stack of books <w>toppled</w> onto the floor. Then its battery <w>weakened</w>, and the robot stopped in the middle of the hallway. Tuan laughed so hard that Mai laughed too.</p>
+        <p>On the day of the fair, they <w>transported</w> the robot to school in a wagon. When it won second prize, Mai turned to her brother. "I <w>apologize</w> for shutting you out," she said. "Working with you <w>revealed</w> something to me: two heads really are better than one."</p>
+      </div></details>
+      </div>
+      <aside class="side">
+        <h4>Vocabulary Words <small style="font-weight:400;color:var(--muted)">· click</small></h4>
+        <ul id="wordList"></ul>
+        <div class="progress"><i id="readBar"></i></div>
+        <p style="margin:8px 0 0" id="readCount">0 / 15 opened</p>
+        <hr style="border:0;border-top:1px solid var(--line);margin:12px 0">
+        <h4>Word Learning Tip</h4>
+        <p style="margin:0">A <b>verb</b> shows an action or a feeling. It often comes right after a noun or pronoun, may end in <i>-s, -ed, -ing</i>, and may follow a helping word such as <i>can, will, must, could</i>.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PAGE 2 ========== -->
+<section id="p2">
+  <div class="card">
+    <h2>2 · Connect Words and Meanings</h2>
+    <p class="sub">Matching · chọn chữ cái của định nghĩa đúng cho mỗi từ</p>
+    <p class="dir"><b>Directions</b> Choose the letter of the correct definition for each word. Green = correct.</p>
+    <div class="match">
+      <div id="matchRows"></div>
+      <div class="defs" id="matchDefs"></div>
+    </div>
+    <div class="actions"><button class="primary" id="matchCheck">Check answers</button><button class="ghost" id="matchReset">Reset</button><span class="score" id="matchScore"></span></div>
+  </div>
+</section>
+
+<!-- ========== PAGE 3 ========== -->
+<section id="p3">
+  <div class="card">
+    <h2>3 · Connect More Words and Meanings</h2>
+    <p class="sub">Multiple choice · phản hồi ngay khi chọn</p>
+    <p class="dir"><b>Directions</b> Read each definition. Click the word that matches.</p>
+    <div id="mcq3"></div>
+    <div class="actions"><span class="score" id="mcq3Score">0 / 8</span><button class="ghost" id="mcq3Reset">Try again</button></div>
+  </div>
+  <div class="card">
+    <h2 style="font-size:20px">★ Create a Billboard</h2>
+    <p class="sub">Viết động từ sao cho hình dáng chữ thể hiện nghĩa của nó, rồi thêm slogan</p>
+    <div class="actions" style="margin-top:0">
+      <select id="bbWord"></select>
+      <input type="text" id="bbSlogan" placeholder="Your slogan…" style="flex:1;min-width:200px" value="Give your day a lift!">
+    </div>
+    <div class="billboard"><div class="bb-word" id="bbOut"></div><div class="bb-slogan" id="bbSloganOut"></div></div>
+    <p class="fb" id="bbCheck"></p>
+  </div>
+</section>
+
+<!-- ========== PAGE 4 ========== -->
+<section id="p4">
+  <div class="card">
+    <h2>4 · Use Words in Context</h2>
+    <p class="sub">Cloze passage · chọn từ đúng cho mỗi chỗ trống trong nhật ký của Mai</p>
+    <p class="dir"><b>Directions</b> Help Mai finish her diary entry. Pick the word that fits each blank.</p>
+    <div class="cloze" id="cloze"></div>
+    <div class="actions"><button class="primary" id="clozeCheck">Check answers</button><button class="ghost" id="clozeReset">Reset</button><span class="score" id="clozeScore"></span></div>
+  </div>
+  <div class="card">
+    <h2 style="font-size:20px">★ Write a Thank-You Card</h2>
+    <p class="sub">Đóng vai Mai, viết thiệp cảm ơn ông. Dùng ít nhất 3 từ vựng (mọi dạng -s/-ed/-ing đều được tính)</p>
+    <textarea id="card4" placeholder="Dear Grandpa, …"></textarea>
+    <div class="tracker" id="track4"></div>
+    <p class="goal" id="goal4"></p>
+  </div>
+</section>
+
+<!-- ========== PAGE 5 ========== -->
+<section id="p5">
+  <div class="card">
+    <h2>5 · Put Words Into Action</h2>
+    <p class="sub">Comic captions · gõ động từ phù hợp (đúng dạng) vào mỗi caption</p>
+    <p class="dir"><b>Directions</b> Type a vocabulary verb in each caption. Then write one sentence Mai or Tuan might say in that scene.</p>
+    <div class="panels" id="panels"></div>
+    <div class="actions"><button class="primary" id="capCheck">Check captions</button><span class="score" id="capScore"></span></div>
+  </div>
+  <div class="card">
+    <h2 style="font-size:20px">★ Write a Story Using Verbs</h2>
+    <p class="sub">Một người khác nhờ ông của Mai giúp. Ghi vấn đề, các bước giải quyết, rồi viết truyện có mở – thân – kết. Dùng ít nhất 5 từ vựng; bản preview sẽ tự gạch chân</p>
+    <label><b>Problem</b></label>
+    <input type="text" id="s5prob" style="width:100%;margin:4px 0 10px" placeholder="Who needs help, and why?">
+    <label><b>Story</b></label>
+    <textarea id="s5story" placeholder="Beginning… middle… end…"></textarea>
+    <div class="tracker" id="track5"></div>
+    <p class="goal" id="goal5"></p>
+    <div class="preview" id="prev5"></div>
+  </div>
+</section>
+
+<!-- ========== PAGE 6 ========== -->
+<section id="p6">
+  <div class="card">
+    <h2>6 · Review and Extend</h2>
+    <p class="sub">Verb tense drill · chọn đúng động từ theo ngữ cảnh, rồi chia đúng thì</p>
+    <table class="tense">
+      <tr><th>Present tense<br><small>(happening now)</small></th><th>Past tense<br><small>(already happened)</small></th><th>Ongoing action<br><small>(still happening)</small></th></tr>
+      <tr><td>add <i>-s</i> → She plays.</td><td>add <i>-d / -ed</i> → She played.</td><td>add <i>-ing</i> → She is playing.</td></tr>
+    </table>
+    <p class="dir"><b>Directions</b> The bold words are context clues. Choose the vocabulary verb that means the same thing, and write it in the correct tense. Watch the spelling: <i>devote → devoting</i> (drop the <i>e</i>), <i>refer → referred</i> (double the <i>r</i>).</p>
+    <div id="tense"></div>
+    <div class="actions"><button class="primary" id="tenseCheck">Check</button><button class="ghost" id="tenseHint">Show rule hints</button><span class="score" id="tenseScore"></span></div>
+  </div>
+  <div class="card">
+    <h2 style="font-size:20px">★ Bumper Sticker Maker</h2>
+    <p class="sub">Slogan phải bắt đầu bằng một động từ vựng hoặc "Do not". Ví dụ: <i>Concentrate harder!</i> · <i>Do not irritate your friends!</i></p>
+    <div class="actions" style="margin-top:0">
+      <input type="text" id="stkIn" style="flex:1;min-width:200px" placeholder="Type a slogan and press Add">
+      <button class="primary" id="stkAdd">Add</button>
+    </div>
+    <p class="fb" id="stkFb"></p>
+    <div id="stickers"></div>
+  </div>
+</section>
+
+<!-- ========== PAGE 7 ========== -->
+<section id="p7">
+  <div class="card">
+    <h2>7 · Check Your Mastery</h2>
+    <p class="sub">Final quiz · 10 câu, chấm điểm và xem lại đáp án ở cuối</p>
+    <p class="dir"><b>Part A</b> Choose the word that best fits each blank.</p>
+    <div id="m7a"></div>
+    <p class="dir" style="margin-top:18px"><b>Part B</b> Choose the best answer to each question.</p>
+    <div id="m7b"></div>
+    <div class="actions"><button class="primary" id="m7Submit">Submit quiz</button><button class="ghost" id="m7Reset">Retake</button></div>
+    <div class="badge" id="m7Badge"></div>
+    <div class="review" id="m7Review"></div>
+  </div>
+</section>
+
+<div class="pager"><button class="ghost" id="prevBtn">← Previous</button><button class="ghost" id="nextBtn">Next →</button></div>
+</main>
+
+<div class="pop" id="pop"></div>
+
+<script>
+/* ---------- data ---------- */
+const WORDS = {
+  apologize:{pos:"verb",def:"to say that you are sorry for something you did",vi:"xin lỗi",clue:"Mai says it right before admitting she was wrong to shut Tuan out."},
+  assemble:{pos:"verb",def:"to put parts together; to gather in a group",vi:"lắp ráp; tập hợp",clue:"They fit the robot's arms and legs together while Tuan holds the screws."},
+  boost:{pos:"verb",def:"to raise, increase, or push up",vi:"tăng, nâng lên",clue:"Tuan's help makes Mai work faster, so her speed goes up."},
+  coax:{pos:"verb",def:"to gently persuade someone to do something",vi:"dỗ dành, thuyết phục nhẹ nhàng",clue:"Mai uses a promise of cookies to get Tuan to come in."},
+  concentrate:{pos:"verb",def:"to keep your attention on one thing; to focus",vi:"tập trung",clue:"The knocking and noise stop Mai from keeping her mind on the robot."},
+  consult:{pos:"verb",def:"to go to someone for advice or information",vi:"hỏi ý kiến, tham vấn",clue:"She goes to a retired engineer when she has a problem."},
+  devote:{pos:"verb",def:"to give your time or energy to something",vi:"dành (thời gian, công sức) cho",clue:"They spend 'the whole afternoon' on testing."},
+  irritate:{pos:"verb",def:"to annoy or bother",vi:"làm bực mình, làm khó chịu",clue:"Constant knocking is the kind of noise that annoys people."},
+  manage:{pos:"verb",def:"to succeed in doing something hard; to control or handle",vi:"xoay xở được; quản lý",clue:"'Can't … to finish anything' – she is not able to get things done."},
+  refer:{pos:"verb",def:"to send or direct someone to a person or place for help",vi:"giới thiệu / chỉ (ai) đến (ai) để được giúp",clue:"'Whenever something broke' the family pointed people to Grandpa."},
+  reject:{pos:"verb",def:"to refuse to accept; to say no to",vi:"từ chối, bác bỏ",clue:"Mai is annoyed with Tuan, so she says no to all his ideas."},
+  reveal:{pos:"verb",def:"to make something known or seen; to uncover",vi:"tiết lộ, cho thấy",clue:"After the fair, Mai discovers a truth she had not seen before."},
+  topple:{pos:"verb",def:"to fall over, or to make something fall over",vi:"đổ nhào; làm đổ",clue:"Books 'onto the floor' after the robot bumps the table."},
+  transport:{pos:"verb",def:"to carry someone or something from one place to another",vi:"vận chuyển, chở",clue:"The robot goes to school 'in a wagon'."},
+  weaken:{pos:"verb",def:"to become less strong, or to make less strong",vi:"yếu đi, làm suy yếu",clue:"The robot stops moving because its battery has less power."}
+};
+const LIST = Object.keys(WORDS);
+
+/* all inflected forms of each word */
+function forms(w){
+  const f=new Set([w]);
+  const irregular={refer:["refers","referred","referring"],coax:["coaxes","coaxed","coaxing"]};
+  if(irregular[w]){irregular[w].forEach(x=>f.add(x));return f;}
+  if(w.endsWith("e")){f.add(w+"s");f.add(w+"d");f.add(w.slice(0,-1)+"ing");}
+  else{f.add(w+"s");f.add(w+"ed");f.add(w+"ing");}
+  return f;
+}
+const FORMS = Object.fromEntries(LIST.map(w=>[w,forms(w)]));
+function lemmaOf(token){token=token.toLowerCase();for(const w of LIST){if(FORMS[w].has(token))return w;}return null;}
+function usedWords(text){const s=new Set();(text.match(/[A-Za-z]+/g)||[]).forEach(t=>{const l=lemmaOf(t);if(l)s.add(l);});return s;}
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function markDone(n){document.querySelector(`nav button[data-p="${n}"]`).classList.add("done");}
+
+/* ---------- nav + theme ---------- */
+const PAGES=["Read","Match","Meanings","Context","Action","Review","Mastery"];
+const nav=document.getElementById("nav");
+let cur=1;
+PAGES.forEach((t,i)=>{const b=document.createElement("button");b.dataset.p=i+1;b.innerHTML=`${i+1} · ${t}<span class="dot"></span>`;b.onclick=()=>go(i+1);nav.appendChild(b);});
+function go(n){cur=n;document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id==="p"+n));
+  nav.querySelectorAll("button").forEach(b=>b.classList.toggle("on",+b.dataset.p===n));
+  document.getElementById("prevBtn").style.visibility=n===1?"hidden":"visible";
+  document.getElementById("nextBtn").style.visibility=n===7?"hidden":"visible";
+  hidePop();window.scrollTo({top:0});}
+document.getElementById("prevBtn").onclick=()=>go(cur-1);
+document.getElementById("nextBtn").onclick=()=>go(cur+1);
+const themeBtn=document.getElementById("themeBtn");
+themeBtn.onclick=()=>{const r=document.documentElement;const d=r.dataset.theme==="dark";r.dataset.theme=d?"light":"dark";themeBtn.textContent=d?"🌙 Dark":"☀️ Light";};
+
+/* ---------- page 1 ---------- */
+const pop=document.getElementById("pop");
+const seen=new Set();
+const wl=document.getElementById("wordList");
+LIST.forEach(w=>{const li=document.createElement("li");li.id="wl-"+w;li.textContent=w;li.addEventListener("click",e=>{e.stopPropagation();showPop(li,w,false);});wl.appendChild(li);});
+document.querySelectorAll("#story w").forEach(el=>{
+  const lemma=lemmaOf(el.textContent);
+  const s=document.createElement("span");s.className="vw";s.textContent=el.textContent;s.dataset.w=lemma;
+  el.replaceWith(s);
+  s.addEventListener("click",e=>{e.stopPropagation();showPop(s,lemma,true);});
+});
+function showPop(el,w,fromStory){
+  const d=WORDS[w];
+  pop.innerHTML=`<b class="w">${w}</b> <span class="pos">(${d.pos})</span><div>${d.def}</div><div class="vi">🇻🇳 ${d.vi}</div>${fromStory?`<div class="clue"><b>Context clue (Mai's Robot):</b> ${d.clue}</div>`:""}`;
+  pop.style.display="block";
+  const r=el.getBoundingClientRect();const pw=Math.min(320,window.innerWidth-24);
+  let left=Math.min(Math.max(12,r.left),window.innerWidth-pw-12);let top=r.bottom+8;
+  if(top+180>window.innerHeight)top=Math.max(12,r.top-pop.offsetHeight-8);
+  pop.style.left=left+"px";pop.style.top=top+"px";
+  seen.add(w);document.querySelectorAll(`.vw[data-w="${w}"]`).forEach(x=>x.classList.add("seen"));
+  document.getElementById("wl-"+w).classList.add("seen");
+  document.getElementById("readBar").style.width=(seen.size/15*100)+"%";
+  document.getElementById("readCount").textContent=`${seen.size} / 15 opened`+(seen.size===15?" ✓":"");
+  if(seen.size===15)markDone(1);
+}
+/* user-pasted reading */
+const LS="l2_reading";
+function renderMine(title,text){
+  const box=document.getElementById("myStory");
+  if(!text.trim()){box.innerHTML="";return;}
+  const paras=text.replace(/\r/g,"").split(/\n\s*\n|\n(?=\s)/).map(x=>x.replace(/\s*\n\s*/g," ").trim()).filter(Boolean);
+  box.innerHTML=(title?`<h3>${esc(title)}</h3>`:"")+paras.map(pp=>`<p>${esc(pp).replace(/[A-Za-z]+/g,t=>{const l=lemmaOf(t);return l?`<span class="vw" data-w="${l}">${t}</span>`:t;})}</p>`).join("");
+  box.querySelectorAll(".vw").forEach(v=>v.addEventListener("click",e=>{e.stopPropagation();showPop(v,v.dataset.w,false);}));
+}
+function showMine(){const t=document.getElementById("myTitle").value,x=document.getElementById("myText").value;renderMine(t,x);
+  const has=!!x.trim();document.getElementById("myText").style.display=has?"none":"";document.getElementById("myTitle").style.display=has?"none":"";
+  document.getElementById("myRender").style.display=has?"none":"";document.getElementById("myEdit").style.display=has?"":"none";
+  document.getElementById("pdfBox").open=!has;
+  try{localStorage.setItem(LS,JSON.stringify({t,x}));}catch(e){}}
+document.getElementById("myRender").onclick=showMine;
+document.getElementById("myEdit").onclick=()=>{["myText","myTitle","myRender"].forEach(i=>document.getElementById(i).style.display="");document.getElementById("myEdit").style.display="none";};
+document.getElementById("myClear").onclick=()=>{document.getElementById("myText").value="";document.getElementById("myTitle").value="";showMine();};
+try{const saved=JSON.parse(localStorage.getItem(LS)||"null");if(saved&&saved.x){document.getElementById("myTitle").value=saved.t||"";document.getElementById("myText").value=saved.x;showMine();}}catch(e){}
+
+function hidePop(){pop.style.display="none";}
+document.addEventListener("click",e=>{if(!pop.contains(e.target))hidePop();});
+window.addEventListener("scroll",hidePop,{passive:true});
+
+/* ---------- page 2 matching ---------- */
+const MATCH=[
+  ["coax","to gently talk someone into doing something"],
+  ["reveal","to let something hidden be seen or known"],
+  ["devote","to give your time or energy to something"],
+  ["irritate","to make someone feel annoyed"],
+  ["topple","to tip over and fall"],
+  ["consult","to ask an expert for advice"],
+  ["reject","to say no to; to refuse"],
+  ["boost","to push up or make bigger"],
+  ["apologize","to say that you are sorry"],
+  ["manage","to be in charge of; to handle"]
+];
+const defOrder=[4,8,1,6,0,9,3,7,2,5]; // shuffled
+const letters="ABCDEFGHIJ";
+const letterOf={};defOrder.forEach((mi,k)=>letterOf[MATCH[mi][0]]=letters[k]);
+document.getElementById("matchDefs").innerHTML=defOrder.map((mi,k)=>`<div><b>${letters[k]}.</b>${MATCH[mi][1]}</div>`).join("");
+document.getElementById("matchRows").innerHTML=MATCH.map((m,i)=>`<div class="mrow"><span class="n">${i+1}.</span><span class="word">${m[0]}</span><select data-w="${m[0]}"><option value="">–</option>${[...letters].map(l=>`<option>${l}</option>`).join("")}</select></div>`).join("");
+document.getElementById("matchCheck").onclick=()=>{let s=0;document.querySelectorAll("#matchRows select").forEach(sel=>{const ok=sel.value===letterOf[sel.dataset.w];sel.className=sel.value?(ok?"ok":"bad"):"";if(ok)s++;});
+  document.getElementById("matchScore").textContent=`${s} / 10`+(s===10?" 🎉":"");if(s===10)markDone(2);};
+document.getElementById("matchReset").onclick=()=>{document.querySelectorAll("#matchRows select").forEach(sel=>{sel.value="";sel.className="";});document.getElementById("matchScore").textContent="";};
+
+/* ---------- MCQ helper ---------- */
+function buildMCQ(container,items,opts){
+  const box=document.getElementById(container);box.innerHTML="";
+  items.forEach((it,qi)=>{
+    const q=document.createElement("div");q.className="q";
+    q.innerHTML=`<div class="stem">${(opts.start||1)+qi}. ${it.q}</div><div class="opts ${it.o.some(o=>o.length>14)?"two":""}"></div>`;
+    const o=q.querySelector(".opts");
+    it.o.forEach((txt,oi)=>{const b=document.createElement("button");b.type="button";b.className="opt";b.innerHTML=`<b>${"ABCD"[oi]}.</b> ${txt}`;b.onclick=()=>opts.onPick(q,b,qi,oi);o.appendChild(b);});
+    box.appendChild(q);
+  });
+}
+
+/* ---------- page 3 ---------- */
+const MCQ3=[
+  {q:"to put the parts of something together",o:["reject","assemble","reveal","coax"],a:1},
+  {q:"to keep your mind on one thing",o:["irritate","topple","concentrate","refer"],a:2},
+  {q:"to send someone to another person for help",o:["refer","boost","weaken","devote"],a:0},
+  {q:"to carry people or goods from place to place",o:["manage","apologize","consult","transport"],a:3},
+  {q:"to lose power or strength",o:["weaken","assemble","coax","reveal"],a:0},
+  {q:"to succeed in doing something difficult",o:["topple","manage","irritate","reject"],a:1},
+  {q:"to give someone more energy or confidence",o:["consult","refer","boost","apologize"],a:2},
+  {q:"to knock down or make fall over",o:["devote","reveal","transport","topple"],a:3}
+];
+let s3=0,done3=new Set();
+function init3(){s3=0;done3.clear();document.getElementById("mcq3Score").textContent="0 / 8";
+  buildMCQ("mcq3",MCQ3,{onPick:(q,b,qi,oi)=>{if(done3.has(qi))return;done3.add(qi);const btns=q.querySelectorAll(".opt");
+    btns[MCQ3[qi].a].classList.add("ok");if(oi!==MCQ3[qi].a)b.classList.add("bad");else s3++;
+    document.getElementById("mcq3Score").textContent=`${s3} / 8`+(done3.size===8?(s3===8?" 🎉":" – try again for 8/8"):"");if(s3===8)markDone(3);}});}
+init3();document.getElementById("mcq3Reset").onclick=init3;
+
+/* billboard */
+const bbSel=document.getElementById("bbWord");
+["boost","topple","weaken","assemble","reveal","transport","irritate","reject","concentrate"].forEach(w=>bbSel.add(new Option(w,w)));
+const bbSlogans={boost:"Give your day a lift!",topple:"Watch out — it's going down!",weaken:"Running out of steam…",assemble:"Snap it together!",reveal:"The secret is out!",transport:"Zoom it across town!",irritate:"Bzzz… so annoying!",reject:"No thanks!",concentrate:"Eyes on the goal."};
+function renderBB(){const w=bbSel.value.toUpperCase();const out=document.getElementById("bbOut");out.className="bb-word fx-"+bbSel.value;out.style.setProperty("--n",w.length);
+  out.innerHTML=[...w].map((c,i)=>`<span style="--i:${i}">${c}</span>`).join("");
+  const slog=document.getElementById("bbSlogan").value;document.getElementById("bbSloganOut").textContent=slog;
+  const used=usedWords(slog);const fb=document.getElementById("bbCheck");
+  fb.className="fb "+(used.size?"ok":"");fb.textContent=used.size?`Nice — your slogan also uses: ${[...used].join(", ")}`:"Tip: try using another vocabulary verb inside your slogan.";}
+bbSel.onchange=()=>{document.getElementById("bbSlogan").value=bbSlogans[bbSel.value];renderBB();};
+document.getElementById("bbSlogan").oninput=renderBB;renderBB();
+
+/* ---------- page 4 cloze ---------- */
+const CLOZE=`<p>Dear Diary,</p>
+<p>This week was hard. My science fair robot was due, and every little noise {irritated|assembled|revealed} me. I could not {concentrate|apologize|topple} for more than five minutes, so I went to {consult|weaken|boost} Grandpa. He always gives good advice, and my aunt says she {refers|rejects|coaxes} all her friends to him.</p>
+<p>Grandpa told me to let Tuan help. At first I wanted to {reject|reveal|transport} the idea, but I tried it anyway. I {coaxed|weakened|devoted} Tuan into my room with cookies. We {assembled|irritated|apologized} the robot's legs together, and his steady hands really {boosted|toppled|consulted} my speed.</p>
+<p>Tomorrow we will {transport|concentrate|refer} the robot to school in Dad's wagon. I hope it doesn't {topple|manage|reveal} over on the way!</p>`;
+const clozeAns=[];let ci=0;
+const shuffleFixed=[[1,0,2],[2,1,0],[0,2,1],[1,2,0],[2,0,1],[0,1,2],[1,0,2],[2,1,0],[0,2,1],[1,2,0]];
+document.getElementById("cloze").innerHTML=CLOZE.replace(/\{([^}]+)\}/g,(m,g)=>{const ops=g.split("|");clozeAns.push(ops[0]);const order=shuffleFixed[ci];
+  const html=`<span class="num">(${ci+1})</span><select data-i="${ci}"><option value="">choose…</option>${order.map(k=>`<option>${ops[k]}</option>`).join("")}</select>`;ci++;return html;});
+document.getElementById("clozeCheck").onclick=()=>{let s=0;document.querySelectorAll("#cloze select").forEach(sel=>{const ok=sel.value===clozeAns[+sel.dataset.i];sel.className=sel.value?(ok?"ok":"bad"):"bad";if(ok)s++;});
+  document.getElementById("clozeScore").textContent=`${s} / 10`+(s===10?" 🎉":"");if(s===10)markDone(4);};
+document.getElementById("clozeReset").onclick=()=>{document.querySelectorAll("#cloze select").forEach(sel=>{sel.value="";sel.className="";});document.getElementById("clozeScore").textContent="";};
+
+/* tracker helper */
+function tracker(inputEl,trackId,goalId,need,previewId){
+  const upd=()=>{const text=inputEl.value;const used=usedWords(text);
+    document.getElementById(trackId).innerHTML=LIST.map(w=>`<span class="${used.has(w)?"hit":""}">${w}</span>`).join("");
+    const g=document.getElementById(goalId);g.textContent=used.size>=need?`✓ ${used.size} vocabulary words used — goal reached!`:`${used.size} / ${need} vocabulary words used`;g.style.color=used.size>=need?"var(--ok)":"var(--muted)";
+    if(previewId){document.getElementById(previewId).innerHTML=esc(text).replace(/[A-Za-z]+/g,t=>lemmaOf(t)?`<u>${t}</u>`:t)||"<span style='color:var(--muted)'>Preview with vocabulary words underlined appears here.</span>";}
+    return used.size>=need;};
+  inputEl.addEventListener("input",upd);upd();return upd;}
+tracker(document.getElementById("card4"),"track4","goal4",3);
+
+/* ---------- page 5 captions ---------- */
+const CAPS=[
+  {e:"🍪👧👦",t:"Mai speaks sweetly and ___ Tuan into the room with cookies.",a:"coax"},
+  {e:"📚💥",t:"Oh no! That pile of books is about to ___ onto the floor!",a:"topple"},
+  {e:"🤖🔋",t:"The robot's battery starts to ___, and it slows to a stop.",a:"weaken"},
+  {e:"🔩🦾",t:"Mai and Tuan ___ the robot's arms at the kitchen table.",a:"assemble"},
+  {e:"🛒🏫",t:"Dad helps ___ the robot to school in a red wagon.",a:"transport"},
+  {e:"🙏🏆",t:"After the fair, Mai will ___ to Tuan for shutting him out.",a:"apologize"}
+];
+document.getElementById("panels").innerHTML=CAPS.map((c,i)=>`<div class="panel"><div class="scene">${c.e}</div><div><b>${i+1}.</b> ${c.t.replace("___",`<input type="text" data-i="${i}" size="11" autocomplete="off" autocapitalize="off">`)}</div><div class="fb" id="cfb${i}"></div><textarea placeholder="What might Mai or Tuan say here?"></textarea></div>`).join("");
+document.getElementById("capCheck").onclick=()=>{let s=0;document.querySelectorAll("#panels input").forEach(inp=>{const i=+inp.dataset.i;const v=inp.value.trim().toLowerCase();const lem=lemmaOf(v);const fb=document.getElementById("cfb"+i);
+  if(lem===CAPS[i].a){s++;inp.className="ok";fb.className="fb ok";fb.textContent="✓ Correct";}
+  else{inp.className="bad";fb.className="fb bad";fb.textContent=v?(lem?`"${v}" is a vocabulary word, but it doesn't fit here.`:"Not a vocabulary word — check the word bank."):"Fill in the blank.";}});
+  document.getElementById("capScore").textContent=`${s} / 6`+(s===6?" 🎉":"");if(s===6)markDone(5);};
+const s5=document.getElementById("s5story");
+tracker(s5,"track5","goal5",5,"prev5");
+
+/* ---------- page 6 tense ---------- */
+const TENSE=[
+  {q:"The club members <b>spend every Saturday</b> on the school garden. They are ___ their weekends to it.",a:"devoting",h:"ongoing: devote → drop e → devoting"},
+  {q:"Last night, Minh <b>kept his mind on</b> his math homework for two hours. He ___ until he finished.",a:"concentrated",h:"past: concentrate + d"},
+  {q:"The coach is <b>asking the team doctor for advice</b> right now. She is ___ the doctor about an injured player.",a:"consulting",h:"ongoing: consult + ing"},
+  {q:"Yesterday, a truck <b>carried</b> the new desks to our school. It ___ forty desks in one trip.",a:"transported",h:"past: transport + ed"},
+  {q:"Every morning, my alarm clock <b>annoys</b> my cat. It ___ her so much that she hides under the bed.",a:"irritates",h:"present (it): irritate + s"}
+];
+document.getElementById("tense").innerHTML=TENSE.map((t,i)=>`<div class="q"><div>${i+1}. ${t.q.replace("___",`<input type="text" data-i="${i}" size="13" autocomplete="off" autocapitalize="off">`)}</div><div class="fb" id="tfb${i}"></div></div>`).join("");
+document.getElementById("tenseCheck").onclick=()=>{let s=0;document.querySelectorAll("#tense input").forEach(inp=>{const i=+inp.dataset.i;const v=inp.value.trim().toLowerCase();const fb=document.getElementById("tfb"+i);const want=TENSE[i].a;
+  if(v===want){s++;inp.className="ok";fb.className="fb ok";fb.textContent="✓ Right verb, right tense";}
+  else if(lemmaOf(v)&&lemmaOf(v)===lemmaOf(want)){inp.className="bad";fb.className="fb bad";fb.textContent="Right verb — wrong tense. Check the time words in the sentence.";}
+  else{inp.className="bad";fb.className="fb bad";fb.textContent=v?"Look at the bold clue again: which verb means the same thing?":"Fill in the blank.";}});
+  document.getElementById("tenseScore").textContent=`${s} / 5`+(s===5?" 🎉":"");if(s===5)markDone(6);};
+document.getElementById("tenseHint").onclick=()=>TENSE.forEach((t,i)=>{const fb=document.getElementById("tfb"+i);if(!fb.textContent.startsWith("✓")){fb.className="fb";fb.style.color="var(--warn)";fb.textContent="Hint: "+t.h;}});
+
+/* bumper stickers */
+document.getElementById("stkAdd").onclick=addSticker;
+document.getElementById("stkIn").addEventListener("keydown",e=>{if(e.key==="Enter")addSticker();});
+function addSticker(){const inp=document.getElementById("stkIn");const v=inp.value.trim();const fb=document.getElementById("stkFb");if(!v)return;
+  const first=(v.match(/[A-Za-z]+/)||[""])[0];const okStart=/^do not\b/i.test(v)||LIST.includes(first.toLowerCase());
+  const used=usedWords(v);
+  if(!okStart){fb.className="fb bad";fb.textContent="Start with a vocabulary verb (base form) or with “Do not”.";return;}
+  if(!used.size){fb.className="fb bad";fb.textContent="“Do not …” needs a vocabulary verb after it.";return;}
+  fb.className="fb ok";fb.textContent="✓ Sticker added!";
+  const s=document.createElement("span");s.className="sticker";s.textContent=v;document.getElementById("stickers").appendChild(s);inp.value="";}
+
+/* ---------- page 7 mastery ---------- */
+const M7A=[
+  {q:"Before the concert, the band members ___ on the stage to warm up.",o:["assemble","reject","weaken"],a:0},
+  {q:"A good magician never ___ how his tricks work.",o:["boosts","reveals","coaxes"],a:1},
+  {q:"A strong storm can ___ a tall, thin tree.",o:["consult","apologize","topple"],a:2},
+  {q:"If your tooth hurts, your doctor may ___ you to a dentist.",o:["refer","irritate","devote"],a:0},
+  {q:"A healthy breakfast can ___ your energy for the whole morning.",o:["manage","boost","reveal"],a:1}
+];
+const M7B=[
+  {q:"Which would most likely <b>irritate</b> you?",o:["a mosquito buzzing in your ear","a warm bath","a thank-you note","a quiet park"],a:0},
+  {q:"Which would you most likely <b>reject</b>?",o:["a free ice cream","a spoiled sandwich","a birthday gift","a sunny day"],a:1},
+  {q:"Where is it hardest to <b>concentrate</b>?",o:["a quiet library","an empty classroom","a loud party","your bedroom at night"],a:2},
+  {q:"What do you need most to <b>manage</b> a small shop?",o:["a pet parrot","a rainy day","a loud radio","good planning"],a:3},
+  {q:"When would you most likely <b>apologize</b>?",o:["after winning a race","after breaking a friend's pencil","after eating lunch","after reading a book"],a:1}
+];
+const ALL7=[...M7A.map(x=>({...x,q:x.q.replace("___","______")})),...M7B];
+let picks7={},locked7=false;
+function init7(){picks7={};locked7=false;document.getElementById("m7Badge").style.display="none";document.getElementById("m7Review").innerHTML="";
+  const pick=(q,b,qi,oi)=>{if(locked7)return;q.querySelectorAll(".opt").forEach(x=>x.classList.remove("pick"));b.classList.add("pick");picks7[qi]=oi;};
+  buildMCQ("m7a",ALL7.slice(0,5),{start:1,onPick:(q,b,qi,oi)=>pick(q,b,qi,oi)});
+  buildMCQ("m7b",ALL7.slice(5),{start:6,onPick:(q,b,qi,oi)=>pick(q,b,qi+5,oi)});}
+init7();
+document.getElementById("m7Reset").onclick=init7;
+document.getElementById("m7Submit").onclick=()=>{
+  if(Object.keys(picks7).length<10&&!confirmInline())return;
+  locked7=true;let s=0;const qs=[...document.querySelectorAll("#m7a .q"),...document.querySelectorAll("#m7b .q")];const rev=[];
+  qs.forEach((q,i)=>{const btns=q.querySelectorAll(".opt");const a=ALL7[i].a;btns[a].classList.add("ok");
+    if(picks7[i]===a)s++;else{if(picks7[i]!==undefined)btns[picks7[i]].classList.add("bad");rev.push(`<div>❌ <b>${i+1}.</b> Correct answer: <b>${ALL7[i].o[a]}</b>${picks7[i]!==undefined?` (you chose: ${ALL7[i].o[picks7[i]]})`:" (no answer)"}</div>`);}});
+  const pct=s*10;const b=document.getElementById("m7Badge");b.style.display="block";
+  const lvl=pct>=90?["🏆","Mastered!","var(--ok-soft)"]:pct>=70?["⭐","Almost there — review the words you missed.","var(--warn-soft)"]:["📘","Keep practicing — go back to pages 1–3.","var(--bad-soft)"];
+  b.style.background=lvl[2];b.innerHTML=`<div class="big">${lvl[0]}</div><div style="font-size:22px;font-weight:800">${s} / 10 · ${pct}%</div><div>${lvl[1]}</div>`;
+  document.getElementById("m7Review").innerHTML=rev.length?"<b>Review</b>"+rev.join(""):"<b>Perfect score — no mistakes!</b>";
+  if(pct>=90)markDone(7);b.scrollIntoView({behavior:"smooth",block:"center"});};
+function confirmInline(){const r=document.getElementById("m7Review");r.innerHTML=`<div style="color:var(--warn)">You answered ${Object.keys(picks7).length} / 10. Answer every question, then submit again.</div>`;return false;}
+
+/* nhận theme từ dashboard */
+window.addEventListener("message",e=>{if(e.data&&e.data.type==="theme"){document.documentElement.dataset.theme=e.data.theme;const b=document.getElementById("themeBtn");if(b)b.textContent=e.data.theme==="dark"?"☀️ Light":"🌙 Dark";}});
+go(1);
+</script>
+</body>
+</html>
